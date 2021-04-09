@@ -1,16 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
+import { ShareContextProvider } from 'context/ShareContext';
+import { SocketContextProvider } from 'context/SocketContext';
 
 const BaseLayout = ({ title, children }) => {
   return (
-    <div>
-      <Head>
-        <title>{title}</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <main>{children}</main>
-    </div>
+    <ShareContextProvider>
+      <SocketContextProvider>
+        <Head>
+          <title>{title}</title>
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
+        <main>{children}</main>
+      </SocketContextProvider>
+    </ShareContextProvider>
   );
 };
 

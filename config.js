@@ -6,7 +6,7 @@ System.config({
     'hooks*': './src/hooks*',
     'pages*': './src/pages*',
     'constants*': './src/constants*',
-    'assets*': './src/images*',
+    'assets*': './src/assets*',
     '*': './src/*',
   },
 });

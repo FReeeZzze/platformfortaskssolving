@@ -1,0 +1,20 @@
+{
+  "read_memo": "m",
+  "write_byte": "b",
+  "write_word": "w",
+  "write_long": "l",
+  "write_string": "s",
+  "up_bits": "u",
+  "down_bits": "d",
+  "toggle_bits": "t",
+  "reset_chip": "r",
+  "answer_echo": "a",
+  "get_version": "g",
+  "out_to": "o",
+  "in_from": "i",
+  "add_byte": "x",
+  "sub_byte": "y",
+  "move_byte": "z",
+  "shift_left": "k",
+  "shift_right": "q"
+}
