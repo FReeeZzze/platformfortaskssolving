@@ -12,9 +12,9 @@ export const Label = styled.label`
 export const Input = styled.input(({ disabled }) => ({
   padding: '8px',
   borderRadius: '4px',
-  border: '2px solid rgb(161 112 112 / 50%)',
-  backgroundColor: disabled ? 'rgba(91,27,17,0.78)' : 'rgba(91,26,91,0.27)',
-  color: disabled ? 'rgb(255,255,255)' : 'rgba(0,0,0,0.78)',
+  border: disabled ? '2px solid #bf0b0b' : '2px solid #646464',
+  backgroundColor: disabled ? '#E91916' : '#767676',
+  color: 'rgba(255,255,255)',
   transition: 'background-color 1000ms, border 300ms ease-in-out',
   fontSize: 16,
   cursor: disabled ? 'not-allowed' : 'auto',

@@ -2,10 +2,12 @@ import { combineReducers } from 'redux';
 
 import commandsReducer from './commandsReducer';
 import loggerReducer from './loggerReducer';
+import webCamReducer from './webcamReducer';
 
 const appReducer = combineReducers({
   commands: commandsReducer,
   logger: loggerReducer,
+  webcam: webCamReducer,
 });
 
 const rootReducer = (state, action) => {

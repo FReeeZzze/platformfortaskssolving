@@ -8,7 +8,7 @@
   "down_bits": "d",
   "toggle_bits": "t",
   "reset_chip": "r",
-  "answer_echo": "a",
+  "answer_echo":  "a",
   "get_version": "g",
   "out_to": "o",
   "in_from": "i",

@@ -1,9 +1,10 @@
 import styled from '@emotion/styled';
 
 export const Container = styled.button(() => ({
+  cursor: 'pointer',
   marginRight: '5px',
   padding: '8px',
-  width: '10rem',
+  width: '8rem',
   fontSize: 16,
   fontWeight: 450,
   border: '1px solid rgba(0,0,0, 0.5)',

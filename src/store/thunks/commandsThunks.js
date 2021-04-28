@@ -10,6 +10,22 @@ export const setCommand = (command) => (dispatch) => {
   );
 };
 
+export const setInputValue = (name, value) => (dispatch) => {
+  dispatch(actions.setInputValue({ name, value }));
+};
+
+export const setActive = (num) => (dispatch) => {
+  dispatch(actions.setActive(num));
+};
+
+export const setLoop = (isLoop) => (dispatch) => {
+  dispatch(actions.setLoop(isLoop));
+};
+
+export const setStep = (step) => (dispatch) => {
+  dispatch(actions.setStep(step));
+};
+
 export const delCommand = (id) => (dispatch) => {
   dispatch(actions.delCommand(id));
 };

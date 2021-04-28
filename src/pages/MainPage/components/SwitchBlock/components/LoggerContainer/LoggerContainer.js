@@ -2,8 +2,9 @@ import React from 'react';
 import { Container } from './LoggerContainer.styled';
 import SelectBox from 'components/SelectBox';
 import { useDispatch, useSelector } from 'react-redux';
-import { setLog } from 'store/thunks/loggerThunks';
+import { setLog, clearLogs } from 'store/thunks/loggerThunks';
 import { SocketContext } from 'context/SocketContext';
+import Button from 'components/Button';
 
 const LoggerContainer = () => {
   const { logger } = useSelector((store) => store.logger);
@@ -26,6 +27,7 @@ const LoggerContainer = () => {
           </option>
         ))}
       </SelectBox>
+      <Button onClick={() => dispatch(clearLogs())}>Очистить</Button>
     </Container>
   );
 };

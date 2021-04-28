@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Formik, Form } from 'formik';
 import { setLog } from 'store/thunks/loggerThunks';
 import commands from 'constants/commands';
@@ -8,47 +8,56 @@ import validate from 'utils/validate';
 import InputText from 'components/InputText';
 import FieldSelect from 'components/FieldSelect';
 import Button from 'components/Button';
-import { ShareContext } from 'context/ShareContext';
 import { SocketContext } from 'context/SocketContext';
 import { ButtonsBox } from './CommandsForm.styled';
+import { setInputValue } from 'store/thunks/commandsThunks';
 
 const CommandsForm = () => {
   const [oneOf, setOneOf] = React.useState('0180');
-  const { setString } = React.useContext(ShareContext);
   const { socket } = React.useContext(SocketContext);
+  const {
+    stringInput,
+    command,
+    register,
+    ram,
+    portInput,
+    operand,
+    comment,
+  } = useSelector((store) => store.commands);
   const dispatch = useDispatch();
-
-  React.useEffect(() => {
-    setString(`${commands['read_memo']}018010`);
-  }, [setString]);
 
   const handleChangeField = (setFieldValue, field, value, values) => {
     setFieldValue(field, value);
-    let temp = `${values.command}${value}${values.operand}`;
+    dispatch(setInputValue(field, value));
+    let temp = `${values.command}${value}${values.operand} ;${values.comment}`;
     switch (field) {
       case 'command':
-        temp = `${value}${oneOf}${values.operand}`;
+        temp = `${value}${oneOf}${values.operand}  ;${values.comment}`;
         break;
       case 'operand':
-        temp = `${values.command}${oneOf}${value}`;
+        temp = `${values.command}${oneOf}${value}  ;${values.comment}`;
+        break;
+      case 'comment':
+        temp = `${values.command}${oneOf}${values.operand}  ;${value}`;
         break;
       default:
         setOneOf(value);
         break;
     }
     setFieldValue('stringInput', temp);
-    setString(temp);
+    dispatch(setInputValue('stringInput', temp));
   };
 
   return (
     <Formik
       initialValues={{
-        stringInput: `${commands['read_memo']}018010`,
-        command: commands['read_memo'],
-        register: '',
-        ram: '0180',
-        portInput: '',
-        operand: '10',
+        stringInput,
+        command,
+        register,
+        ram,
+        portInput,
+        operand,
+        comment,
       }}
       validate={validate}
       onSubmit={(values) => {
@@ -65,11 +74,9 @@ const CommandsForm = () => {
             value={values.stringInput}
             disabled
           />
-          <InputText
+          <FieldSelect
             name="register"
-            type="text"
             label="Регистр:"
-            value={values.register}
             onChange={(e) => {
               handleChangeField(
                 setFieldValue,
@@ -77,6 +84,12 @@ const CommandsForm = () => {
                 e.target.value,
                 values
               );
+            }}
+            options={{
+              ...Array.from(Array(26).keys()).map((i) => {
+                const str = i.toString(16);
+                return str.length > 1 ? `00${str}` : `000${str}`;
+              }),
             }}
           />
           <InputText
@@ -128,12 +141,28 @@ const CommandsForm = () => {
             }}
             options={ports}
           />
+          <InputText
+            name="comment"
+            type="text"
+            label="Комментарий:"
+            value={values.comment}
+            onChange={(e) => {
+              handleChangeField(
+                setFieldValue,
+                'comment',
+                e.target.value,
+                values
+              );
+            }}
+          />
           <ButtonsBox>
             <Button
               type="reset"
               onClick={() => {
                 resetForm();
-                setString(`${commands['read_memo']}018010`);
+                dispatch(
+                  setInputValue('stringInput', `${commands['read_memo']}018010`)
+                );
               }}
             >
               Очистить
