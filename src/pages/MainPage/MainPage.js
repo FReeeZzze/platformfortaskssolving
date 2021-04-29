@@ -1,15 +1,32 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { wrapComponent } from 'react-snackbar-alert';
+import { setLog } from 'store/thunks/loggerThunks';
+import { setActive, setLoop } from 'store/thunks/commandsThunks';
+import { SocketContext } from 'context/SocketContext';
 import { WebCamContainer, SwitchBlock } from './components';
 import { MainContainer } from './MainPage.styled';
-import { setLog } from 'store/thunks/loggerThunks';
-import { useDispatch, useSelector } from 'react-redux';
-import { SocketContext } from 'context/SocketContext';
-import { setActive, setLoop } from 'store/thunks/commandsThunks';
 
-const MainPage = () => {
+const MainPage = ({ createSnackbar }) => {
   const dispatch = useDispatch();
   const { socket } = React.useContext(SocketContext);
   const { commands, loop, step } = useSelector((store) => store.commands);
+
+  const showSnackbar = React.useCallback(
+    (message, status) => {
+      createSnackbar({
+        message: message,
+        dismissable: false,
+        pauseOnHover: true,
+        progressBar: true,
+        sticky: false,
+        theme: ['ok', 'authorized'].includes(status) ? 'success' : 'info',
+        timeout: 3000,
+      });
+    },
+    [createSnackbar]
+  );
 
   React.useEffect(() => {
     if (socket) {
@@ -22,8 +39,13 @@ const MainPage = () => {
           setTimeout(() => dispatch(setLoop(false)), 1000);
         }
       });
+
+      socket.on('alert', (payload) => {
+        console.log('alert: ', payload);
+        showSnackbar(payload.message, payload.status);
+      });
     }
-  }, [dispatch, socket]);
+  }, [showSnackbar, dispatch, socket]);
 
   const timerId = React.useRef({});
 
@@ -37,9 +59,6 @@ const MainPage = () => {
           index += 1;
         } else index = 0;
       }, +step + 300);
-    } else if (socket) {
-      dispatch(setLoop(false));
-      socket.emit('stop_loop');
     }
     return () => {
       if (timerId) {
@@ -56,4 +75,8 @@ const MainPage = () => {
   );
 };
 
-export default MainPage;
+MainPage.propTypes = {
+  createSnackbar: PropTypes.any,
+};
+
+export default wrapComponent(MainPage);
