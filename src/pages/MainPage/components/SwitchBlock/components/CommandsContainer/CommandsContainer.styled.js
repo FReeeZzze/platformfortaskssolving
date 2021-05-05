@@ -21,3 +21,7 @@ export const PanelCommands = styled.div(() => ({
   display: 'grid',
   gridGap: 5,
 }));
+
+export const Option = styled.option((props) => ({
+  backgroundColor: props.active ? '#007aff' : 'none',
+}));

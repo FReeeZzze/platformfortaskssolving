@@ -5,8 +5,12 @@ import { wrapComponent } from 'react-snackbar-alert';
 import { setLog } from 'store/thunks/loggerThunks';
 import { setActive, setLoop } from 'store/thunks/commandsThunks';
 import { SocketContext } from 'context/SocketContext';
-import { WebCamContainer, SwitchBlock } from './components';
+import { WebCamContainer, SwitchBlock, LoggerContainer } from './components';
 import { MainContainer } from './MainPage.styled';
+import dynamic from 'next/dynamic';
+const PlatformGuideBox = dynamic(() => import('components/PlatformGuideBox'), {
+  ssr: false,
+});
 
 const MainPage = ({ createSnackbar }) => {
   const dispatch = useDispatch();
@@ -70,7 +74,9 @@ const MainPage = ({ createSnackbar }) => {
   return (
     <MainContainer>
       <WebCamContainer />
+      <LoggerContainer />
       <SwitchBlock />
+      <PlatformGuideBox />
     </MainContainer>
   );
 };

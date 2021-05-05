@@ -12,7 +12,6 @@ export const Select = styled.select(() => ({
     outline: 'none',
   },
   '& option:checked': {
-    background:
-      'linear-gradient(rgba(90, 37, 105, 0.4), rgba(90, 37, 105, 0.6))',
+    backgroundColor: '#007aff',
   },
 }));

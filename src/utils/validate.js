@@ -1,11 +1,11 @@
 const validate = (values) => {
   const errors = {};
   const messages = {
-    default: 'Обязательное поле*',
-    oneOf: 'Заполните одно из обязательных полей*',
-    numbers: 'Допустимы только цифры',
-    ram: 'только в шестнадцетиричной системе от 100 - 300',
-    operand: 'только в диапозоне от 1 - 255 (00 - FF)',
+    default: '* Обязательное поле*',
+    oneOf: '* Заполните одно из обязательных полей*',
+    numbers: '* Допустимы только цифры',
+    ram: '* только в шестнадцетиричной системе от 100 - 300',
+    operand: '* только в диапозоне от 1 - 255 (01 - FF)',
   };
 
   const onlyNumbers = (value) => /\D+/gm.test(value);
@@ -22,6 +22,10 @@ const validate = (values) => {
 
   if (!values.operand) {
     errors.operand = messages.default;
+  }
+
+  if (!values.ram) {
+    errors.ram = messages.default;
   }
 
   if (operandValid(values.operand)) {

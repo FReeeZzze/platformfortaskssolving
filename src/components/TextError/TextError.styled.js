@@ -1,7 +1,12 @@
 import styled from '@emotion/styled';
 
 export const Container = styled.div`
-  color: #fc1f1f;
-  font-size: 10px;
+  border-radius: 3px;
+  background: #000000bd;
+  color: #ff0000;
   margin-left: 5px;
+  font-size: 12px;
+  justify-self: baseline;
+  margin: 1px;
+  padding: 3px;
 `;

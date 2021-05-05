@@ -1,19 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
-import { SocketContextProvider } from 'context/SocketContext';
 import { SnackbarProvider } from 'react-snackbar-alert';
+import { SocketContextProvider } from 'context/SocketContext';
+import { TabContextProvider } from 'context/TabContext';
 import SnackBarMessage from 'components/SnackBarMessage';
 
 const BaseLayout = ({ title, children }) => {
   return (
     <SocketContextProvider>
       <SnackbarProvider component={SnackBarMessage} position="bottom-left">
-        <Head>
-          <title>{title}</title>
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
-        <main>{children}</main>
+        <TabContextProvider>
+          <Head>
+            <title>{title}</title>
+            <link rel="icon" href="/favicon.ico" />
+          </Head>
+          <main>{children}</main>
+        </TabContextProvider>
       </SnackbarProvider>
     </SocketContextProvider>
   );

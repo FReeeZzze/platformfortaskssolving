@@ -1,34 +1,38 @@
 import React from 'react';
-import {
-  Container,
-  ButtonsBox,
-  PanelCommands,
-} from './CommandsContainer.styled';
 import { useDispatch, useSelector } from 'react-redux';
+import { SocketContext } from 'context/SocketContext';
 import {
   setCommand,
   delCommand,
   clearCommands,
   setLoop,
+  setActive,
+  setStep,
+  setSelectedCommands,
 } from 'store/thunks/commandsThunks';
+import { setLog } from 'store/thunks/loggerThunks';
 import SelectBox from 'components/SelectBox';
 import Button from 'components/Button';
-import { setLog } from 'store/thunks/loggerThunks';
-import { SocketContext } from 'context/SocketContext';
+import {
+  Option,
+  Container,
+  ButtonsBox,
+  PanelCommands,
+} from './CommandsContainer.styled';
 
 const CommandsContainer = () => {
   const [currentIdOption, setCurId] = React.useState(0);
   const [indexElement, setIndex] = React.useState(0);
-  const [step, setStep] = React.useState('500');
-  const { commands, active, stringInput } = useSelector(
+  const [download, setDownload] = React.useState([]);
+  const inputFile = React.useRef({});
+  const { socket } = React.useContext(SocketContext);
+  const dispatch = useDispatch();
+  const { commands, selectedCommands, active, step, stringInput } = useSelector(
     (store) => store.commands
   );
-  const [download, setDownload] = React.useState([]);
-  const dispatch = useDispatch();
-  const { socket } = React.useContext(SocketContext);
 
   const onDoubleClick = (e) => {
-    const value = e.target.value.replace(/(<=|=>|\s+)/gm, '');
+    const value = JSON.parse(e.target.value).name.replace(/(<=|=>|\s+)/gm, '');
     dispatch(setLog(`<= ${value}`));
     socket.emit('send_data', value);
   };
@@ -94,28 +98,47 @@ const CommandsContainer = () => {
     });
   }, [commands]);
 
-  const selectRef = React.useRef({});
-  const inputFile = React.useRef({});
-
+  const handleSelectValues = (e) => {
+    dispatch(
+      setSelectedCommands(
+        Array.from(e.target.selectedOptions, (option) => option.value)
+      )
+    );
+  };
   const handleReadFile = () => inputFile.current.click();
+  const nodes = React.useMemo(() => new Map(), []);
+
+  React.useEffect(() => {
+    Array.from(nodes)
+      .filter((node) => node != null)
+      .forEach((item) => {
+        if (item[0] === active) {
+          item[1].selected = true;
+        }
+      });
+  }, [active, nodes]);
 
   return (
-    <Container>
-      <SelectBox multiple>
+    <Container data-guid="list-commands">
+      <SelectBox
+        value={selectedCommands}
+        onChange={handleSelectValues}
+        multiple
+      >
         {commands.map((command, index) => (
-          <option
+          <Option
+            ref={(n) => nodes.set(index, n)}
             key={`index${command.id}`}
-            selected={active === index}
-            ref={(ref) => (selectRef.current = ref)}
             onClick={() => {
+              dispatch(setActive(index));
               setIndex(index);
               setCurId(command.id);
             }}
             onDoubleClick={onDoubleClick}
-            value={command.name}
+            value={JSON.stringify(command)}
           >
             {command.name}
-          </option>
+          </Option>
         ))}
       </SelectBox>
       <PanelCommands>
@@ -127,7 +150,7 @@ const CommandsContainer = () => {
             type="number"
             name="step"
             value={step}
-            onChange={(e) => setStep(e.target.value)}
+            onChange={(e) => dispatch(setStep(e.target.value))}
           />
           <input
             ref={inputFile}

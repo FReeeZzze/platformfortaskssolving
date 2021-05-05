@@ -4,6 +4,7 @@ export const Container = styled.div(() => ({
   display: 'grid',
   margin: '10px 0',
   '& select': {
+    height: '2.5rem',
     color: 'rgba(255,255,255)',
     borderRadius: '4px',
     border: '2px solid #646464',

@@ -10,6 +10,7 @@ export const Label = styled.label`
 `;
 
 export const Input = styled.input(({ disabled }) => ({
+  height: '2.5rem',
   padding: '8px',
   borderRadius: '4px',
   border: disabled ? '2px solid #bf0b0b' : '2px solid #646464',

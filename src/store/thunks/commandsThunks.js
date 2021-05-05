@@ -33,3 +33,7 @@ export const delCommand = (id) => (dispatch) => {
 export const clearCommands = () => (dispatch) => {
   dispatch(actions.clearCommands());
 };
+
+export const setSelectedCommands = (commands) => (dispatch) => {
+  dispatch(actions.setSelectedCommands(commands));
+};

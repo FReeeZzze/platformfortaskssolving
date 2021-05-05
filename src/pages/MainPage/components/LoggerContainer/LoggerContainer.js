@@ -4,7 +4,6 @@ import SelectBox from 'components/SelectBox';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLog, clearLogs } from 'store/thunks/loggerThunks';
 import { SocketContext } from 'context/SocketContext';
-import Button from 'components/Button';
 
 const LoggerContainer = () => {
   const { logger } = useSelector((store) => store.logger);
@@ -19,7 +18,7 @@ const LoggerContainer = () => {
   };
 
   return (
-    <Container>
+    <Container data-guid="logger">
       <SelectBox multiple>
         {logger.map((log) => (
           <option key={`index${log.id}`} onDoubleClick={onDoubleClick}>
@@ -27,7 +26,7 @@ const LoggerContainer = () => {
           </option>
         ))}
       </SelectBox>
-      <Button onClick={() => dispatch(clearLogs())}>Очистить</Button>
+      {/*<Button onClick={() => dispatch(clearLogs())}>Очистить</Button>*/}
     </Container>
   );
 };

@@ -5,14 +5,11 @@ import TabButton from './components/TabButton';
 
 const TabsContainer = ({ handleActive, tab }) => {
   return (
-    <Container>
-      <TabButton active={tab === 1} onClick={() => handleActive(1)}>
-        Логгер
-      </TabButton>
-      <TabButton active={tab === 2} onClick={() => handleActive(2)}>
+    <Container data-guid="switcher">
+      <TabButton active={tab === 0} onClick={() => handleActive(0)}>
         Панель комманд
       </TabButton>
-      <TabButton active={tab === 3} onClick={() => handleActive(3)}>
+      <TabButton active={tab === 1} onClick={() => handleActive(1)}>
         Список комманд
       </TabButton>
     </Container>

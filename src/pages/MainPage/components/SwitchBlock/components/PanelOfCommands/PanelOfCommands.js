@@ -4,7 +4,7 @@ import { Container } from './PanelOfCommands.styled';
 
 const PanelOfCommands = () => {
   return (
-    <Container>
+    <Container data-guid="form-commands">
       <CommandsForm />
     </Container>
   );

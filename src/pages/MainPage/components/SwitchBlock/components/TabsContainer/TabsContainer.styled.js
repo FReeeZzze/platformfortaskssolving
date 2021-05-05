@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 export const Container = styled.div(() => ({
   display: 'grid',
-  gridTemplate: 'auto / 1fr 1fr 1fr',
+  gridTemplate: 'auto / auto auto',
   fontStyle: 'normal',
   fontWeight: 'normal',
   fontSize: '16px',
