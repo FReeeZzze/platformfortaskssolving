@@ -21,10 +21,10 @@ const MainPage = ({ createSnackbar }) => {
     (message, status) => {
       createSnackbar({
         message: message,
-        dismissable: false,
+        dismissable: true,
         pauseOnHover: true,
-        progressBar: true,
-        sticky: false,
+        progressBar: false,
+        sticky: true,
         theme: ['ok', 'authorized'].includes(status) ? 'success' : 'info',
         timeout: 3000,
       });

@@ -71,7 +71,7 @@ const CommandsForm = () => {
         temp = OutPutCommandString(
           values.command,
           oneOf,
-          value,
+          value.toString(16),
           commentsCommands[values.command]
         );
         break;

@@ -1,4 +1,5 @@
 {
-    "socket": "http://localhost:5000",
-    "webCamSocket": "http://localhost:12000"
+    "socket": "http://127.0.0.1:5000",
+    "webCamSocket": "http://127.0.0.1:12000",
+    "liveStream": "http://127.0.0.1:5000/video_feed"
 }

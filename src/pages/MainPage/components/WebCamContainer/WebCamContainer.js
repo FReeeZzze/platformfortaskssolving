@@ -10,6 +10,7 @@ import { SocketContext } from 'context/SocketContext';
 import { setLive } from 'store/thunks/webcamThunks';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTour } from 'store/thunks/tourThunks';
+import urls from 'constants/urls';
 
 const WebCamContainer = () => {
   const { webCamSocket } = React.useContext(SocketContext);
@@ -58,7 +59,7 @@ const WebCamContainer = () => {
           Как это работает?
         </HelpButton>
       </HeaderContainer>
-      <img src={data} alt="video" />
+      <img src={urls.liveStream || data} alt="live_stream" />
     </Container>
   );
 };
