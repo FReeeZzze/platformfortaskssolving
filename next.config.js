@@ -8,4 +8,13 @@ module.exports = withImages({
     config.resolve.modules.push(path.resolve('./src/'));
     return config;
   },
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/auth',
+        permanent: false,
+      },
+    ];
+  },
 });
