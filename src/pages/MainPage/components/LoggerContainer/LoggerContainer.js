@@ -11,7 +11,7 @@ const LoggerContainer = () => {
   const { socket } = React.useContext(SocketContext);
 
   const onDoubleClick = (e) => {
-    if (e.target.value.match(/=>/gm, '')?.length) return;
+    if (/=>/gm.test(e.target.value)) return;
     const value = e.target.value.replace(/(<=|=>|\s+)/gm, '');
     dispatch(setLog(`<= ${value}`));
     socket.emit('send_data', value);
